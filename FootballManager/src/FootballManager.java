@@ -1,7 +1,5 @@
 public interface FootballManager {
-    interface Player{
-        public boolean equals(FootballManager.Player player);
-    }
+    void addPlayer(Player player);
 
 //    enum League{
 //        English,Spanish,Ukrainian,Mexican;
@@ -18,10 +16,12 @@ public interface FootballManager {
 //        Attack, //Нападающий
 //    }
 
-    void addPlayer(Player player);
     Object pull();
-    public String toString();
-    public int size();
+
+    String toString();
+
+    int size();
+
     void removePlayer(Player player);
 
     Player getPlayerByName(String name);
@@ -33,5 +33,10 @@ public interface FootballManager {
     Player[] getLeaguePlayers(League league);
 
     void addScorePoints(String name, int points);
-    /*...*/
+
+    interface Player {
+        public FootballManager.Player getNext();
+
+        void setNext(FootballManager.Player next);
+    }
 }
