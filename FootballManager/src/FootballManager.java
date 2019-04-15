@@ -35,8 +35,12 @@ public interface FootballManager {
     void addScorePoints(String name, int points);
 
     interface Player {
-        public FootballManager.Player getNext();
 
+        String getName();
+        FootballManager.Player getNext();
+        League getLeague();
+        Team getTeam();
+        void setPoints(Integer points);
         void setNext(FootballManager.Player next);
     }
 }

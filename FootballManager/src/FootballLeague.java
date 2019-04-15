@@ -1,3 +1,5 @@
+import java.util.Currency;
+
 public class FootballLeague implements FootballManager {
     private Player head = null;       // указатель на первый элемент
     private Player tail = null;
@@ -5,6 +7,7 @@ public class FootballLeague implements FootballManager {
     private String name;
     private String team;
     private String league;
+    private Integer points;
 
     @Override
     public void addPlayer(Player player) {
@@ -20,51 +23,53 @@ public class FootballLeague implements FootballManager {
 
     @Override
     public void removePlayer(Player player) {
+        Player previous = null;
         Player current = head;
-        Player previous = head;
-        if (size != 0) {
-            if (size() == 1) {
-                if (player.equals(current)) {
-                    head = null;
-                    System.out.println("Элемент один и он удален");
-                }
-                System.out.println("Элемент один и он не тот, что мы ищем");
-            }
-            int pos = 0;
-            while (pos < size()) {
-                System.out.println(player.toString());
-                System.out.println(current.toString());
-                System.out.println("              ");
-//                previous = current;
-//                current = current.getNext();
-                if (player.equals(current)) {
-                    if (current.getNext() == null) {
-                        System.out.println(" я работаю");
+        while (current != null)
+        {
+            if (player.equals(current) && player.hashCode() == current.hashCode())
+            {
+                if (previous != null)
+                {
+                    if (current.getNext() == null)
+                    {
+                        tail = previous;
                         previous.setNext(null);
-                        System.out.println("Элемент последний и он удален");
-                    } else {
-
-                        previous.setNext(current.getNext());
-                        System.out.println("Элемент найден и удален");
+                        current = null;
                     }
-                } else {
-                    previous = current;
-                    current = current.getNext();
+                    else {
+                        previous.setNext(current.getNext());
+                        current = current.getNext();
+
+                    }
                 }
-                pos++;
+                else
+                {
+                    head = head.getNext();
+                    previous = null;
+                    current = head;
+                    if (head == null)
+                    {
+                        tail.setNext(null);
+                    }
+                }
+
+                size--;
             }
-        } else {
-            System.out.println("Список нет элементов");
+
+            else {
+                previous = current;
+                current = current.getNext();
+            }
         }
-        System.out.println("Нужного элемента не найдено");
-//        this.equals(player);
-//        Stream.of(this).forEach( System.out::println );
+
+
     }
 
     @Override
     public Object pull() {
-
-        if (size == 0) {
+        int num =size();
+        if (num == 0) {
             return null;
         }
 
@@ -74,41 +79,109 @@ public class FootballLeague implements FootballManager {
         if (this.head == null) {
             tail = null;
         }
-
-        size--;
+        num--;
         return curr;
     }
-//    @Override
-//    public String toString() {
-//        return "PlayerImpl [name=" + name
-//                + ", league=" + league
-//                + ", team=" + team+"]";
-//    }
-
 
     @Override
     public Player getPlayerByName(String name) {
+        Player current = this.head;
+        int number = size();
+        if (number != 0) {
+            while (number!=0) {
+                if (name.equals(current.getName())) {
+                    return current;
+
+                    }
+                    else {
+                    number--;
+                    current = current.getNext();
+                }
+            }
+            }
         return null;
-    } //получить игрока по имени
+    }
 
     @Override
     public Player[] getAllPlayers() {
-        return new Player[0];
+        int num = size();
+        Player[] array = new Player[size()];
+        int i = 0;
+        if (num == 0) {
+            return null;
+
+        }
+        Player curr = this.head;
+        while(num!=0){
+            array[i] = curr;
+            curr= curr.getNext();
+            i++;
+            num--;
+        }
+        return array;
     }
 
     @Override
     public Player[] getTeamPlayers(Team team) {
-        return new Player[0];
-    } //получить командных игроков
+        int num = size();
+        Player[] array = new Player[size()];
+        int i = 0;
+        if (num == 0) {
+            return null;
+        }
+        Player current = this.head;
+        while(num!=0){
+            if (current.getTeam()!=null) {
+                if ((current.getTeam()).equals(team)) {
+                   array[i] = current;
+                    i++;
+                }
+            }
+            current= current.getNext();
+            num--;
+        }
+        return array;
+
+    }
 
     @Override
     public Player[] getLeaguePlayers(League league) {
-        return new Player[0];
+        int num = size();
+        Player[] array = new Player[size()];
+        int i = 0;
+        if (num == 0) {
+            return null;
+        }
+        Player current = this.head;
+        while(num!=0){
+            if (current.getLeague()!=null) {
+                if ((current.getLeague()).equals(league)) {
+                    array[i] = current;
+                    i++;
+                }
+            }
+            current= current.getNext();
+            num--;
+        }
+        return array;
     }
 
     @Override
     public void addScorePoints(String name, int points) { //добавить очки
-
+        int num = size();
+        if (num == 0) {
+            System.out.println("Список игроков пуст");
+        }
+        Player current = this.head;
+        while(num!=0){
+            if (current.getName()!=null) {
+                if ((current.getName()).equals(name)) {
+                   current.setPoints(points);
+                }
+            }
+            current= current.getNext();
+            num--;
+        }
     }
 
     public int size() {

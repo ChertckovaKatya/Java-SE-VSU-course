@@ -18,8 +18,20 @@ public class PlayerImpl implements FootballManager.Player, Comparable<PlayerImpl
         this.name = name;
     }
 
-    String getName() {
+    public String getName() {
         return name;
+    }
+
+    public Team getTeam(){
+        return team;
+    }
+
+    public League getLeague(){
+        return league;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
     }
 
     public int compareTo(PlayerImpl p) {
@@ -29,9 +41,10 @@ public class PlayerImpl implements FootballManager.Player, Comparable<PlayerImpl
 
     @Override
     public String toString() {
-        return "PlayerImpl [name=" + name
-                + ", league=" + league
-                + ", team=" + team + "]";
+        return "Игрок [ФИО:" + name
+                + ", Лига:" + league
+                + ", Позиция: " + team
+                + ", Кол-во забитых голов = " + points+ "]";
     }
 
     public FootballManager.Player getNext() {
@@ -47,7 +60,6 @@ public class PlayerImpl implements FootballManager.Player, Comparable<PlayerImpl
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         PlayerImpl playerImpl = (PlayerImpl) o;
-        //if (!(playerImpl instanceof PlayerImpl)) return false;
         if (getClass() != playerImpl.getClass()) return false;
         if (name != null && league != null && team != null) {
             return name.equals(playerImpl.name) && league.equals((playerImpl.league)) && team.equals(playerImpl.team);
