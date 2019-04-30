@@ -25,35 +25,56 @@ public class FileShit {
                 if (catalog.exists()== false) {
                     catalog.mkdirs();
                 }
-               try{
+
+                try{
                    Path file3 = Files.copy(file2,cat_path,REPLACE_EXISTING);
                    List<String> lines = Files.readAllLines(file3, StandardCharsets.UTF_8);
-                   Stream<String> strimFromList = lines.stream();
+                   Stream<String> strim_janury = lines.stream();
 
-//                   List<String> collection = Arrays.asList("0.454,34.54,0.5");
-//                   Stream<String> streamFromCollection = collection.stream();
-//                   streamFromCollection.mapToDouble((s)->Double.parseDouble(s))
-//                           .forEach(System.out::println);
+                  Double janury;
+                  Double february;
+                  Double march;
+                       try {
+                       janury = strim_janury.skip(1)
+                               .map((s) -> s.substring(36))
+                               .limit(31)
+                               .flatMapToDouble((p) -> Arrays.asList(p.split(","))
+                                       .stream().mapToDouble(Double::parseDouble))
+                               .sum();
+                           janury = janury/31;
+//                           System.out.println(janury);
 
-//                   String janury;
-//                       try {
-//                           //janury =
-//                                   strimFromList
-//                                   .skip(1)
-//                                   .map((s) -> s.substring(36))
-//                                   .limit(1)
-//                                           .map(s->s.split(""))
-//                                           .flatMap(Arrays::stream)
-//                                           .collect(Collectors.toList())
-//                                   //.mapToDouble((s)-> Double.parseDouble(s))
-//                                   // .reduce(((el1,el2)->el1+el2))
-//                                    .forEach(System.out::print);
-//                                  // .get();
-//                           // System.out.println(janury);
-//                       }
-//                       catch(NumberFormatException e){
-//                           e.printStackTrace();
-//                       }
+                           Stream<String> strim_febtuary = lines.stream();
+
+                           february = strim_febtuary.skip(1)
+                                   .map((s) -> s.substring(36))
+                                   .skip(31)
+                                   .limit(28)
+                                   .flatMapToDouble((p) -> Arrays.asList(p.split(","))
+                                           .stream().mapToDouble(Double::parseDouble))
+                                   .sum();
+                           february = february/29;
+//                           System.out.println(february);
+
+                           Stream<String> strim_march = lines.stream();
+                           march = strim_march.skip(1)
+                                   .map((s) -> s.substring(36))
+                                   .skip(59)
+                                   .limit(31)
+                                   .flatMapToDouble((p) -> Arrays.asList(p.split(","))
+                                           .stream().mapToDouble(Double::parseDouble))
+                                   .sum();
+
+                           march = march/31;
+//                           System.out.println(march);
+
+                           Long average_for_three_months = Math.round((janury+february+march)/3);
+                           System.out.println("Среднее потребление электроэнергии  в день за три месяца: "+ average_for_three_months+" КВт");
+
+                       }
+                       catch(NumberFormatException e){
+                           e.printStackTrace();
+                       }
                 }
                catch (IOException e){
                    System.err.println(e);
@@ -61,7 +82,9 @@ public class FileShit {
                 break;
             }
         }
-    }
+
+
+}
 }
 
 
