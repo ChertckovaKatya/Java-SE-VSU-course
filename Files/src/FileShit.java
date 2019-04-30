@@ -38,11 +38,11 @@ public class FileShit {
                        janury = strim_janury.skip(1)
                                .map((s) -> s.substring(36))
                                .limit(31)
-                               .flatMapToDouble((p) -> Arrays.asList(p.split(","))
+                               .flatMapToDouble(
+                                       (p) -> Arrays.asList(p.split(","))
                                        .stream().mapToDouble(Double::parseDouble))
                                .sum();
                            janury = janury/31;
-//                           System.out.println(janury);
 
                            Stream<String> strim_febtuary = lines.stream();
 
@@ -50,27 +50,30 @@ public class FileShit {
                                    .map((s) -> s.substring(36))
                                    .skip(31)
                                    .limit(28)
-                                   .flatMapToDouble((p) -> Arrays.asList(p.split(","))
+                                   .flatMapToDouble(
+                                           (p) -> Arrays.asList(p.split(","))
                                            .stream().mapToDouble(Double::parseDouble))
                                    .sum();
                            february = february/29;
-//                           System.out.println(february);
 
                            Stream<String> strim_march = lines.stream();
                            march = strim_march.skip(1)
                                    .map((s) -> s.substring(36))
                                    .skip(59)
                                    .limit(31)
-                                   .flatMapToDouble((p) -> Arrays.asList(p.split(","))
+                                   .flatMapToDouble(
+                                           (p) -> Arrays.asList(p.split(","))
                                            .stream().mapToDouble(Double::parseDouble))
                                    .sum();
 
                            march = march/31;
-//                           System.out.println(march);
-
                            Long average_for_three_months = Math.round((janury+february+march)/3);
                            System.out.println("Среднее потребление электроэнергии  в день за три месяца: "+ average_for_three_months+" КВт");
 
+                           if (catalog.exists()) {
+                               Files.delete(file3);
+                               catalog.delete();
+                           }
                        }
                        catch(NumberFormatException e){
                            e.printStackTrace();
@@ -79,12 +82,13 @@ public class FileShit {
                catch (IOException e){
                    System.err.println(e);
                }
+
                 break;
             }
+
+
         }
-
-
-}
+    }
 }
 
 
