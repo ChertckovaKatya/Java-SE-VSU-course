@@ -11,12 +11,12 @@ import java.util.stream.Stream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-public class FileShit {
+public class FileProcessing {
     File file = new File("energy-consumption.txt");
     File file_dan = new File("energy-consumption.dan");
 
 
-    public void fileShit() throws IOException {
+    public void fileProcessing() throws IOException {
         for(;;) {
             if (file.isFile() && file_dan.exists()) {
                 Path file2 = Paths.get("D://Java//Files","energy-consumption.txt" );

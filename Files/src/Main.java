@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args){
         FileShit file = new FileShit();
         try {
-            file.fileShit();
+            file.fileProcessing();
         } catch (IOException e) {
             e.printStackTrace();
         }
